@@ -18,6 +18,7 @@ const initialOrders: Order[] = [
 
 interface OrderState {
   orders: Order[];
+  addOrder: (order: Order) => void;
   updateOrderStatus: (id: string, status: Order["status"]) => void;
 }
 
@@ -25,6 +26,9 @@ export const useOrderStore = create<OrderState>()(
   persist(
     (set) => ({
       orders: initialOrders,
+      addOrder: (order) => set((state) => ({
+        orders: [order, ...state.orders]
+      })),
       updateOrderStatus: (id, status) => set((state) => ({
         orders: state.orders.map(o => o.id === id ? { ...o, status } : o)
       })),

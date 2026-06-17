@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Filter, ChevronDown, ShoppingBag, Star } from "lucide-react";
 import { formatPrice } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { useCartStore } from "@/src/store/useCartStore";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useProductStore } from "@/src/store/useProductStore";
 import { TourGuide } from "@/src/components/TourGuide";
 
@@ -11,12 +11,22 @@ const categories = ["All", "Cricket", "Football", "Badminton", "Shoes", "Accesso
 const brands = ["All", "CA", "SS", "Yonex", "Nike", "Adidas", "Masuri"];
 
 export function Shop() {
+  const { category } = useParams<{ category: string }>();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedBrand, setSelectedBrand] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const products = useProductStore((state) => state.products);
+
+  useEffect(() => {
+    if (category) {
+      const found = categories.find((c) => c.toLowerCase() === category.toLowerCase());
+      setSelectedCategory(found || "All");
+    } else {
+      setSelectedCategory("All");
+    }
+  }, [category]);
 
   const filteredProducts = products.filter((p) => {
     const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;

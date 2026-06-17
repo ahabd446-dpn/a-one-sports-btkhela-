@@ -35,7 +35,7 @@ const initialProducts: Product[] = [
 
 interface ProductState {
   products: Product[];
-  addProduct: (product: Omit<Product, "id">) => void;
+  addProduct: (product: Omit<Product, "id" | "sku" | "stock" | "reviewCount" | "soldCount" | "views" | "deliveryEstimate" | "deliveryCharge" | "images" | "highlights" | "description" | "specifications" | "variants" | "faqs"> & Partial<Product> & { image: string }) => void;
   updateProduct: (id: string, product: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
 }
@@ -45,10 +45,11 @@ export const useProductStore = create<ProductState>()(
     (set) => ({
       products: initialProducts,
       addProduct: (productData) => set((state) => {
-        const newProduct = {
+        const id = Math.random().toString(36).substr(2, 9);
+        const newProduct = createFullProduct({
           ...productData,
-          id: Math.random().toString(36).substr(2, 9)
-        };
+          id
+        });
         return { products: [newProduct, ...state.products] };
       }),
       updateProduct: (id, updatedData) => set((state) => ({

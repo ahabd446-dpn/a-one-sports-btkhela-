@@ -61,6 +61,7 @@ export interface Product {
   deliveryEstimate: string;
   deliveryCharge: number;
   images: ProductImage[];
+  image: string;
   highlights: string[];
   description: string;
   specifications: Specification[];

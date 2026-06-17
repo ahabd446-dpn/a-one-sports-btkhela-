@@ -15,10 +15,12 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/src/store/useCartStore";
 import { formatPrice, cn } from "@/src/lib/utils";
+import { useOrderStore } from "@/src/store/useOrderStore";
 
 export default function Checkout() {
   const { items, clearCart } = useCartStore();
   const navigate = useNavigate();
+  const { addOrder } = useOrderStore();
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -114,7 +116,15 @@ export default function Checkout() {
     // Simulate API Call
     setTimeout(() => {
       setIsSubmitting(false);
-      setOrderTrackingCode(`AOS-${Math.floor(100000 + Math.random() * 900000)}-PK`);
+      const trackingCode = `AOS-${Math.floor(100000 + Math.random() * 900000)}-PK`;
+      setOrderTrackingCode(trackingCode);
+      addOrder({
+        id: trackingCode,
+        customer: formData.fullName,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        status: "Pending",
+        total: total
+      });
       setIsSuccess(true);
       clearCart();
       window.scrollTo({ top: 0, behavior: 'smooth' });

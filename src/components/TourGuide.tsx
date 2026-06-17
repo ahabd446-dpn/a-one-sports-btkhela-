@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import * as ReactJoyride from "react-joyride";
-const Joyride = (ReactJoyride as any).default ?? ReactJoyride;
-type Step = ReactJoyride.Step;
-type CallBackProps = ReactJoyride.CallBackProps;
-const STATUS = (ReactJoyride as any).STATUS ?? (ReactJoyride as any).default?.STATUS;
+import { Joyride, Step, EventData as CallBackProps, STATUS } from "react-joyride";
 
 interface TourGuideProps {
   steps: Step[];

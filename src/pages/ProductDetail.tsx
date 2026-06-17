@@ -88,9 +88,9 @@ export default function ProductDetail() {
     </div>
   );
 
-  const currentPrice = product.variants[selectedVariant]?.salePrice || product.variants[selectedVariant]?.price || product.price;
-  const originalPrice = product.variants[selectedVariant]?.price || product.price;
-  const hasDiscount = !!product.variants[selectedVariant]?.salePrice || !!product.salePrice;
+  const currentPrice = product.variants?.[selectedVariant]?.salePrice || product.variants?.[selectedVariant]?.price || product.price;
+  const originalPrice = product.variants?.[selectedVariant]?.price || product.price;
+  const hasDiscount = !!product.variants?.[selectedVariant]?.salePrice || !!product.salePrice;
 
   return (
     <div className="min-h-screen pb-24">
@@ -99,7 +99,7 @@ export default function ProductDetail() {
         <meta name="description" content={product.description} />
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={product.images[0].url} />
+        <meta property="og:image" content={product.images?.[0]?.url || product.image || ""} />
       </Helmet>
 
       {/* Breadcrumbs */}
@@ -123,19 +123,19 @@ export default function ProductDetail() {
                 key={selectedImage}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                src={product.images[selectedImage].url} 
-                alt={product.images[selectedImage].alt}
+                src={product.images?.[selectedImage]?.url || product.image || ""} 
+                alt={product.images?.[selectedImage]?.alt || product.name}
                 className="w-full h-full object-cover transform hover:scale(1.05) transition-transform duration-300 cursor-zoom-in"
               />
               {hasDiscount && (
                 <div className="absolute top-6 left-6 bg-[#a3e635] text-black font-black text-[10px] px-3 py-1.5 rounded-lg shadow-xl uppercase tracking-widest">
-                  -{Math.round((1 - (product.salePrice || product.variants[0].salePrice || 0) / originalPrice) * 100)}%
+                  -{Math.round((1 - (product.salePrice || product.variants?.[0]?.salePrice || 0) / originalPrice) * 100)}%
                 </div>
               )}
             </div>
             
             <div className="grid grid-cols-5 gap-4">
-              {product.images.map((img, idx) => (
+              {(product.images || []).map((img, idx) => (
                 <button 
                   key={img.id}
                   onClick={() => setSelectedImage(idx)}
@@ -233,7 +233,7 @@ export default function ProductDetail() {
                   id: product.id,
                   name: product.name,
                   price: currentPrice,
-                  image: product.images[0].url,
+                  image: product.images?.[0]?.url || product.image || "",
                   quantity: quantity
                 })}
                 className="w-full bg-[#a3e635] text-black h-16 rounded-xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-[#bef264] transition-all transform hover:-translate-y-1 shadow-2xl shadow-[#a3e635]/10"
