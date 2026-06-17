@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user with role-based access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "admin", "superadmin"] },
+        "phoneNumber": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Sports equipment or accessory",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "sku": { "type": "string" },
+        "barcode": { "type": "string" },
+        "description": { "type": "string" },
+        "images": { "type": "array" },
+        "price": { "type": "number" },
+        "salePrice": { "type": "number" },
+        "stockQuantity": { "type": "integer" },
+        "brand": { "type": "string" },
+        "category": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "integer" },
+        "variants": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "sku", "price", "stockQuantity", "category"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["name", "slug"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "items": { "type": "array" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled", "refunded"] },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "shippingAddress": { "type": "object" },
+        "trackingNumber": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerId", "items", "status", "totalAmount"]
+    },
+    "News": {
+      "title": "News",
+      "description": "Sports news article",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "image": { "type": "string" },
+        "category": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "publishedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and roles"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Sports products catalog"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders"
+    },
+    "/news/{newsId}": {
+      "schema": "News",
+      "description": "Sports news items"
+    }
+  }
+}

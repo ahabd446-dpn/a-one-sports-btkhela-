@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #a3e635; /* Strict Lime Green */
+  --color-primary-dark: #84cc16;
+  --color-accent: #a3e635;
+  --color-background: #0a0a0a;
+  --color-surface: #111111;
+
+  /* Rule 7: Z-index Hierarchy */
+  --z-announcement: 50;
+  --z-navbar: 40;
+  --z-dropdown: 30;
+  --z-mobile-menu: 20;
+  --z-modal: 100;
+
+  /* Heights */
+  --header-height: 104px; /* Default: 40px (announcement) + 64px (navbar) */
+  --header-height-mobile: 64px; /* Mobile: 0px (announcement) + 64px (navbar) */
+}
+
+@layer base {
+  body {
+    @apply bg-background text-white font-sans antialiased overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-white;
+  }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-white;
+}

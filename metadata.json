@@ -1,0 +1,8 @@
+{
+  "name": "A One Sports Batkhela",
+  "description": "Premium sports equipment and accessories store in Batkhela, Pakistan. Browse cricket bats, footballs, volleyballs, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
